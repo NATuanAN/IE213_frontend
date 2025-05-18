@@ -31,7 +31,7 @@ const TableQuiz = () => {
                         listQuiz.map((item, index) => {
                             return (
                                 <tr key={`table-quiz-${index}`}>
-                                    <td>{item.id}</td>
+                                    <td>{item._id}</td>
                                     <td>{item.name}</td>
                                     <td>{item.description}</td>
                                     <td>{item.difficulty}</td>
