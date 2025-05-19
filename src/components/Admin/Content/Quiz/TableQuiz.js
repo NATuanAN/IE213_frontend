@@ -2,17 +2,17 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { getAllQuizForAdmin } from "../../../../services/apiService";
 
-const TableQuiz = () => {
-    const [listQuiz, setListQuiz] = useState([]);
-    useEffect(() => {
-        fetchQuiz();
-    }, []);
-    const fetchQuiz = async () => {
-        let res = await getAllQuizForAdmin();
-        if (res && res.EC === 0) {
-            setListQuiz(res.DT);
-        }
-    };
+const TableQuiz = (prop) => {
+    // const [listQuiz, setListQuiz] = useState([]);
+    // useEffect(() => {
+    //     fetchQuiz();
+    // }, []);
+    // const fetchQuiz = async () => {
+    //     let res = await getAllQuizForAdmin();
+    //     if (res && res.EC === 0) {
+    //         setListQuiz(res.DT);
+    //     }
+    // };
     return (
         <>
             <div>ListQuizzes:</div>
@@ -27,8 +27,8 @@ const TableQuiz = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {listQuiz &&
-                        listQuiz.map((item, index) => {
+                    {prop.listQuiz &&
+                        prop.listQuiz.map((item, index) => {
                             return (
                                 <tr key={`table-quiz-${index}`}>
                                     <td>{item._id}</td>

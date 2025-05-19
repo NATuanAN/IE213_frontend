@@ -1,10 +1,11 @@
 import "./ManageQuiz.scss";
 import Select from "react-select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { postCreateNewQuiz } from "../../../../services/apiService";
 import { toast, Toast } from "react-toastify";
 import TableQuiz from "./TableQuiz";
 import Accordion from "react-bootstrap/Accordion";
+import { getAllQuizForAdmin } from "../../../../services/apiService";
 
 const options = [
     { value: "EASY", label: "EASY" },
@@ -16,6 +17,21 @@ const ManageQuiz = () => {
     const [description, setDescription] = useState("");
     const [type, setType] = useState("EASY");
     const [image, setImage] = useState("");
+
+
+    //TableQuiz function
+    const [listQuiz, setListQuiz] = useState([]);
+    useEffect(() => {
+        fetchQuiz();
+    }, []);
+    const fetchQuiz = async () => {
+        let res = await getAllQuizForAdmin();
+        if (res && res.EC === 0) {
+            setListQuiz(res.DT);
+        }
+    };
+
+
 
     const handleChangeFile = (e) => {
         if (e.target && e.target.files && e.target.files[0]) {
@@ -40,6 +56,8 @@ const ManageQuiz = () => {
             setDescription("");
             setType("EASY");
             setImage(null);
+            fetchQuiz();
+
         } else {
             toast.error("Create new quiz failed!");
         }
@@ -115,9 +133,9 @@ const ManageQuiz = () => {
             </Accordion>
 
             <div className="list-detail">
-                <TableQuiz></TableQuiz>
+                <TableQuiz listQuiz={listQuiz} />
             </div>
-        </div>
+        </div >
     );
 };
 
